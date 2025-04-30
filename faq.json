@@ -1,5 +1,22 @@
 [
   {
+    "pergunta": "Saudações e mensagens iniciais",
+    "variacoes": [
+      "Olá",
+      "Oi",
+      "Bom dia",
+      "Boa tarde",
+      "Boa noite",
+      "Tudo bem?",
+      "Como vai?",
+      "E aí?",
+      "Oi Glamour",
+      "Oi atendimento"
+    ],
+    "resposta": "Olá! Seja muito bem-vindo(a) à Glamour Limousines. Como posso te ajudar hoje?"
+  },
+  
+  {
     "pergunta": "Vocês têm pacote para festa de debutante?",
     "variacoes": [
       "Oferecem opção para debutantes?",
@@ -34,7 +51,7 @@
       "Qual o valor da placa com nome e idade?",
       "Vocês fazem placa especial?"
     ],
-    "resposta": "Sim, a placa personalizada é um item opcional com valor de R$60,00 por unidade. Ela pode conter o nome e a idade da debutante, adicionando um toque especial à comemoração."
+    "resposta": "A placa personalizada é um item opcional com valor de R$60,00 por unidade. Ela pode conter o nome e a idade da debutante, adicionando um toque especial à comemoração."
   },
   {
     "pergunta": "A debutante pode sair pelo teto-solar para fotos?",
@@ -43,7 +60,7 @@
       "Há restrições quanto ao uso do teto-solar?",
       "É permitido usar o teto-solar para fotos?"
     ],
-    "resposta": "Sim, a limousine possui um sistema que permite o uso do teto-solar apenas com o veículo parado, garantindo segurança. Nesse caso, é permitido utilizá-lo para fotos."
+    "resposta": "A limousine possui um sistema que permite o uso do teto-solar apenas com o veículo parado, garantindo segurança. Nesse caso, é permitido utilizá-lo para fotos."
   },
   {
     "pergunta": "A limousine pode parar em diferentes locais para fotos?",
@@ -70,7 +87,7 @@
       "Vocês têm fotógrafo para a festa?",
       "Posso contratar meu próprio fotógrafo?"
     ],
-    "resposta": "Oferecemos serviço de fotógrafo profissional como opcional. Caso prefira, você pode contratar um fotógrafo de sua preferência para acompanhar o evento."
+    "resposta": "Oferecemos serviço de fotógrafo profissional como opcional. Caso prefira, você pode contratar um fotógrafo de sua preferência para acompanhar o evento. Lembrando que ele entra na contagem de passageiros."
   },
   {
     "pergunta": "Os pais ou responsáveis podem acompanhar a debutante no passeio?",
@@ -80,6 +97,14 @@
       "Há espaço para responsáveis acompanharem?"
     ],
     "resposta": "Sim, os pais ou responsáveis podem acompanhar a debutante no passeio. Lembrando que todos, exceto o motorista, contam como passageiros para manter o limite de cada limousine."
+  },
+  {
+    "pergunta": "Os pais ou responsáveis podem acompanhar o aniversárinate no passeio?",
+    "variacoes": [
+      "Os pais ou responsáveis podem acompanhar o aniversárinate no passeio?",
+      "É permitido que adultos acompanhem a aniversáriante?"
+    ],
+    "resposta": "Sim, os pais ou responsáveis podem acompanhar o aniversáriante no passeio. Lembrando que todos, exceto o motorista, contam como passageiros para manter o limite de cada limousine."
   },
   {
     "pergunta": "A limousine pode buscar a debutante em casa e depois levá-la ao salão?",
@@ -118,7 +143,7 @@
       "Pode buscar a noiva e levar para o casamento?",
       "Vocês fazem o transporte da noiva?"
     ],
-    "resposta": "Sim! A limousine pode buscar a noiva em casa e levá-la até a cerimônia, respeitando o tempo contratado."
+    "resposta": "Sim! A limousine pode buscar a noiva em casa ou em um salão de beleza por exemplo, e levá-la até a cerimônia, respeitando o tempo contratado."
   },
   {
     "pergunta": "É possível estender o trajeto até a recepção após a cerimônia?",
@@ -298,7 +323,7 @@
       "Posso levar as amigas da debutante?",
       "Qual a capacidade máxima de passageiros?"
     ],
-    "resposta": "Sim, temos limousines com diferentes capacidades: Ford Edge: até 10 passageiros Hyundai Vera Cruz e Dodge Journey: até 15 passageiros Lembrando que todos, exceto o motorista, contam como passageiros."
+    "resposta": "A Glamour Limousines conta com uma frota de limousines com diferentes capacidades: Ford Edge: até 10 passageiros Hyundai Vera Cruz e Dodge Journey: até 15 passageiros Lembrando que todos, exceto o motorista, contam como passageiros."
   },
   {
     "pergunta": "É permitido levar brindes, doces ou lembrancinhas dentro da limousine?",
@@ -810,8 +835,25 @@
     "variacoes": [
       "Cabe mais gente do que o limite?",
       "Pode exceder o número de passageiros?",
-      "Tem problema colocar mais pessoas do que o permitido?"
+      "Tem problema colocar mais pessoas do que o permitido?",
+      "Posso levar pessoas a mais?"
     ],
     "resposta": "Não é permitido exceder o limite de passageiros da limousine. Isso infringe as leis de trânsito e compromete o conforto e segurança dos ocupantes."
+  },
+  {
+    "pergunta": "A limousine possui seguro?",
+    "variacoes": [
+      "Tem seguro incluso?",
+      "A limousine é segurada?",
+      "Vocês oferecem seguro no serviço?",
+      "Em caso de acidente, o veículo tem seguro?",
+      "O passeio é coberto por algum seguro?",
+      "Tem seguro para os passageiros?",
+      "É possível contratar com seguro?",
+      "Existe algum tipo de proteção ou cobertura?",
+      "A empresa tem parceria com seguradora?"
+    ],
+    "resposta": "Atualmente, não trabalhamos com nenhuma companhia de seguros para cobertura da limousine ou dos passageiros. Todo o serviço é prestado com segurança e responsabilidade, mas não inclui seguro adicional."
   }
+  
 ]
