@@ -22,7 +22,10 @@ try {
 
 // Constrói o prompt com base na FAQ
 function construirPrompt(perguntaUsuario) {
-  const introducao = `Você é um atendente da Glamour Limousines. Use APENAS as respostas abaixo para responder perguntas dos clientes. Se não encontrar uma correspondência clara, diga que um atendente irá ajudar.`;
+  const introducao = `Você é um atendente da Glamour Limousines. Use apenas a FAQ abaixo para responder. 
+Se for uma saudação (Oi, Olá, Boa tarde, etc), use a resposta correspondente.
+Se não houver correspondência clara, diga que um atendente irá responder.`;
+
   const baseFaq = faq.map((item, i) => `Q${i + 1}: ${item.pergunta}\nA${i + 1}: ${item.resposta}`).join('\n\n');
   return `${introducao}\n\n${baseFaq}\n\nPergunta: ${perguntaUsuario}`;
 }
