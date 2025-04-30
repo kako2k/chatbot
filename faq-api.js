@@ -1,4 +1,4 @@
-// faq-ai.js (corrigido com prompt seguro e interpretação semântica restrita)
+// faq-ai.js (versão segura com IA apenas para classificação de intenção)
 
 const express = require('express');
 const cors = require('cors');
@@ -19,24 +19,19 @@ try {
   console.error('Erro ao carregar FAQ:', err);
 }
 
-function construirPrompt(perguntaUsuario) {
-  const introducao = `
-Você é um atendente virtual da Glamour Limousines.
-Você deve responder APENAS com base nas perguntas e respostas listadas abaixo.
-Se a pergunta do cliente for uma saudação, responda educadamente.
-Se a pergunta não estiver na lista, diga:
-"Essa pergunta ainda não está cadastrada no nosso sistema automático. Um de nossos atendentes irá te ajudar com isso agora mesmo."
+// Constrói prompt para IA classificar a pergunta e retornar a mais próxima da FAQ
+function construirPromptClassificador(perguntaUsuario) {
+  const listaPerguntas = faq.map((item, i) => `(${i + 1}) ${item.pergunta}`).join('\n');
+  return `Você é um classificador de perguntas para atendimento da Glamour Limousines.
+Seu trabalho é receber uma pergunta de um cliente e retornar o número da pergunta mais próxima entre as listadas abaixo.
+Se nenhuma pergunta for compatível, responda apenas "0".
 
-Aqui está a base de conhecimento oficial:
-`;
+Lista de perguntas disponíveis:
+${listaPerguntas}
 
-  const corpo = faq.map((item) => {
-    return `PERGUNTA: ${item.pergunta}\nVARIAÇÕES: ${(item.variacoes || []).join(' | ')}\nRESPOSTA: ${item.resposta}`;
-  }).join("\n\n");
+Pergunta do cliente: ${perguntaUsuario}
 
-  const final = `\n\nPergunta do cliente: ${perguntaUsuario}`;
-
-  return `${introducao}${corpo}${final}`;
+Responda apenas com o número correspondente.`;
 }
 
 app.post('/responder', async (req, res) => {
@@ -44,33 +39,32 @@ app.post('/responder', async (req, res) => {
   if (!pergunta) return res.status(400).json({ erro: 'Pergunta ausente.' });
 
   try {
+    const prompt = construirPromptClassificador(pergunta);
+
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
-        {
-          role: 'user',
-          content: construirPrompt(pergunta)
-        }
+        { role: 'user', content: prompt }
       ],
-      temperature: 0.2
+      temperature: 0
     });
 
-    const resposta = completion.choices[0].message.content.trim();
+    const numero = parseInt(completion.choices[0].message.content.trim());
 
-    if (resposta.toLowerCase().includes('atendente')) {
+    if (!isNaN(numero) && numero > 0 && numero <= faq.length) {
+      return res.json({ resposta: faq[numero - 1].resposta });
+    } else {
       return res.json({
         resposta: "Essa pergunta ainda não está cadastrada no nosso sistema automático. Um de nossos atendentes irá te ajudar com isso agora mesmo."
       });
     }
-
-    res.json({ resposta });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ erro: 'Erro ao gerar resposta com a IA.' });
+    console.error('Erro com IA:', err);
+    res.status(500).json({ erro: 'Erro ao classificar pergunta.' });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor com IA ativo na porta ${PORT}`);
+  console.log(`Servidor com classificador de FAQ ativo na porta ${PORT}`);
 });
