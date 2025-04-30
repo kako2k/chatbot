@@ -1,4 +1,4 @@
-// faq-ai.js (API com OpenAI para interpretação semântica)
+// faq-ai.js (corrigido com prompt seguro e interpretação semântica restrita)
 
 const express = require('express');
 const cors = require('cors');
@@ -12,7 +12,6 @@ app.use(express.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// Carrega o conteúdo do FAQ
 let faq = [];
 try {
   faq = JSON.parse(fs.readFileSync('./faq.json', 'utf8'));
@@ -20,14 +19,24 @@ try {
   console.error('Erro ao carregar FAQ:', err);
 }
 
-// Constrói o prompt com base na FAQ
 function construirPrompt(perguntaUsuario) {
-  const introducao = `Você é um atendente da Glamour Limousines. Use apenas a FAQ abaixo para responder. 
-Se for uma saudação (Oi, Olá, Boa tarde, etc), use a resposta correspondente.
-Se não houver correspondência clara, diga que um atendente irá responder.`;
+  const introducao = `
+Você é um atendente virtual da Glamour Limousines.
+Você deve responder APENAS com base nas perguntas e respostas listadas abaixo.
+Se a pergunta do cliente for uma saudação, responda educadamente.
+Se a pergunta não estiver na lista, diga:
+"Essa pergunta ainda não está cadastrada no nosso sistema automático. Um de nossos atendentes irá te ajudar com isso agora mesmo."
 
-  const baseFaq = faq.map((item, i) => `Q${i + 1}: ${item.pergunta}\nA${i + 1}: ${item.resposta}`).join('\n\n');
-  return `${introducao}\n\n${baseFaq}\n\nPergunta: ${perguntaUsuario}`;
+Aqui está a base de conhecimento oficial:
+`;
+
+  const corpo = faq.map((item) => {
+    return `PERGUNTA: ${item.pergunta}\nVARIAÇÕES: ${(item.variacoes || []).join(' | ')}\nRESPOSTA: ${item.resposta}`;
+  }).join("\n\n");
+
+  const final = `\n\nPergunta do cliente: ${perguntaUsuario}`;
+
+  return `${introducao}${corpo}${final}`;
 }
 
 app.post('/responder', async (req, res) => {
