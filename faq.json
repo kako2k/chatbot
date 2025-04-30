@@ -17,23 +17,24 @@
     "Posso fazer uma pergunta?"
   ],
   "resposta": "Olá! Seja muito bem-vindo(a) à Glamour Limousines. É um prazer te atender. Como posso te ajudar hoje?"
-}
+},
 
-  {
-    "pergunta": "A limousine possui seguro?",
-    "variacoes": [
-      "Tem seguro incluso?",
-      "A limousine é segurada?",
-      "Vocês oferecem seguro no serviço?",
-      "Em caso de acidente, o veículo tem seguro?",
-      "O passeio é coberto por algum seguro?",
-      "Tem seguro para os passageiros?",
-      "É possível contratar com seguro?",
-      "Existe algum tipo de proteção ou cobertura?",
-      "A empresa tem parceria com seguradora?"
-    ],
-    "resposta": "Atualmente, não trabalhamos com nenhuma companhia de seguros para cobertura da limousine ou dos passageiros. Todo o serviço é prestado com segurança e responsabilidade, mas não inclui seguro adicional."
-  }
+{
+  "pergunta": "A limousine possui seguro?",
+  "variacoes": [
+    "Tem seguro incluso?",
+    "A limousine é segurada?",
+    "Vocês oferecem seguro no serviço?",
+    "Em caso de acidente, o veículo tem seguro?",
+    "O passeio é coberto por algum seguro?",
+    "Tem seguro para os passageiros?",
+    "É possível contratar com seguro?",
+    "Existe algum tipo de proteção ou cobertura?",
+    "A empresa tem parceria com seguradora?"
+  ],
+  "resposta": "Atualmente, não trabalhamos com nenhuma companhia de seguros para cobertura da limousine ou dos passageiros. Todo o serviço é prestado com segurança e responsabilidade, mas não inclui seguro adicional."
+},
+
 
   
   {
