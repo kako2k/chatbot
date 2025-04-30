@@ -1,4 +1,4 @@
-// faq-ai.js (versão segura com IA apenas para classificação de intenção)
+// faq-ai.js (IA só classifica a intenção — resposta sempre do JSON)
 
 const express = require('express');
 const cors = require('cors');
@@ -12,6 +12,7 @@ app.use(express.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// Carrega o conteúdo da FAQ
 let faq = [];
 try {
   faq = JSON.parse(fs.readFileSync('./faq.json', 'utf8'));
@@ -19,17 +20,16 @@ try {
   console.error('Erro ao carregar FAQ:', err);
 }
 
-// Constrói prompt para IA classificar a pergunta e retornar a mais próxima da FAQ
-function construirPromptClassificador(perguntaUsuario) {
-  const listaPerguntas = faq.map((item, i) => `(${i + 1}) ${item.pergunta}`).join('\n');
-  return `Você é um classificador de perguntas para atendimento da Glamour Limousines.
-Seu trabalho é receber uma pergunta de um cliente e retornar o número da pergunta mais próxima entre as listadas abaixo.
-Se nenhuma pergunta for compatível, responda apenas "0".
+// Prompt apenas para identificar a pergunta base da FAQ
+function construirPromptIdentificador(perguntaUsuario) {
+  const perguntasListadas = faq.map((item, i) => `(${i + 1}) ${item.pergunta}`).join('\n');
+  return `Você é um classificador de intenção. Receberá uma pergunta de cliente e deve identificar qual pergunta da lista abaixo mais se aproxima.
 
-Lista de perguntas disponíveis:
-${listaPerguntas}
+Se nenhuma pergunta corresponder, diga "0".
 
-Pergunta do cliente: ${perguntaUsuario}
+Perguntas disponíveis:\n${perguntasListadas}
+
+Pergunta recebida: ${perguntaUsuario}
 
 Responda apenas com o número correspondente.`;
 }
@@ -39,7 +39,7 @@ app.post('/responder', async (req, res) => {
   if (!pergunta) return res.status(400).json({ erro: 'Pergunta ausente.' });
 
   try {
-    const prompt = construirPromptClassificador(pergunta);
+    const prompt = construirPromptIdentificador(pergunta);
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
@@ -49,22 +49,22 @@ app.post('/responder', async (req, res) => {
       temperature: 0
     });
 
-    const numero = parseInt(completion.choices[0].message.content.trim());
+    const index = parseInt(completion.choices[0].message.content.trim());
 
-    if (!isNaN(numero) && numero > 0 && numero <= faq.length) {
-      return res.json({ resposta: faq[numero - 1].resposta });
+    if (!isNaN(index) && index > 0 && index <= faq.length) {
+      return res.json({ resposta: faq[index - 1].resposta });
     } else {
       return res.json({
         resposta: "Essa pergunta ainda não está cadastrada no nosso sistema automático. Um de nossos atendentes irá te ajudar com isso agora mesmo."
       });
     }
   } catch (err) {
-    console.error('Erro com IA:', err);
-    res.status(500).json({ erro: 'Erro ao classificar pergunta.' });
+    console.error('Erro ao classificar:', err);
+    return res.status(500).json({ erro: 'Erro ao processar sua pergunta.' });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor com classificador de FAQ ativo na porta ${PORT}`);
+  console.log(`Servidor IA classificador iniciado na porta ${PORT}`);
 });
